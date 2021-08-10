@@ -1,25 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Switch } from 'react-router-dom';
+import ProductList from './Components/ProductList';
+
+import {useGlobalContext} from './context'
+import ProductDetails from './Components/ProductDetails';
+
+
+
 
 function App() {
+ 
+  const {loading} = useGlobalContext();
+
+  if(loading){
+    return <h3>Loading Please Wait </h3>
+  }
+else
+{
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      
+      <Switch>
+            <Route exact path="/" component={ProductList} /> 
+            <Route exact path="/products/:id" component={ProductDetails} /> 
+            <Route path="*"> <h3>Not Found</h3> </Route> 
+      </Switch>
+    </>
   );
 }
-
+}
 export default App;
